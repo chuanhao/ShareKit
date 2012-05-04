@@ -26,10 +26,53 @@
 //
 
 #import "SHKCustomFormControllerLargeTextField.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @implementation SHKCustomFormControllerLargeTextField
 
 // See http://getsharekit.com/customize/ for additional information on customizing
+
+- (void)loadView {
+    
+    [super loadView];
+    
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.view.frame) - 10.0 - 63.0, 0.0 + 3.0, 63.0, 42.0)];
+    if (self.image) {
+        imageView.image = self.image;
+    }
+    imageView.clipsToBounds = YES;
+    CALayer *layer = imageView.layer;
+    layer.borderWidth = 1.0;
+    layer.borderColor = [UIColor grayColor].CGColor;
+    layer.cornerRadius = 5.0;
+    [self.view addSubview:imageView];    
+    _imageView = [imageView retain];
+    [imageView release];
+}
+
+- (void)viewDidLayoutSubviews {
+    
+    [super viewDidLayoutSubviews];
+    _imageView.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - 10.0 - 63.0, 0.0 + 5.0, 63.0, 42.0);
+}
+
+- (void)setImage:(UIImage *)image {
+    
+    [super setImage:image];
+    _imageView.image = image;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];	
+	
+    self.textView.selectedRange = NSMakeRange(0, 0);
+}
+
+- (void)dealloc {
+    RELEASE_SAFELY(_imageView);
+    [super dealloc];
+}
 
 @end

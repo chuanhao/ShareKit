@@ -30,6 +30,7 @@
 
 @interface SHKCustomFormControllerLargeTextField : SHKFormControllerLargeTextField {
 
+    UIImageView *_imageView;
 }
 
 @end
